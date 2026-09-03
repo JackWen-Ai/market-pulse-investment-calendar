@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="美股与美国宏观事件的本地事件日历" />
+    <title>Market Pulse · 投资日历</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div>
+            <p class="eyebrow" id="brandEyebrow">MARKET PULSE</p>
+            <h1>投资日历</h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="primary-btn" id="addEventBtn" type="button"><span aria-hidden="true">＋</span> 添加事件</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="toolbar" aria-label="日历控制">
+          <div class="month-controls">
+            <button class="icon-btn" id="prevMonthBtn" type="button" aria-label="上个月">‹</button>
+            <div class="month-title-wrap">
+              <h2 id="monthTitle">2026年9月</h2>
+              <span id="monthMeta">—</span>
+            </div>
+            <button class="today-jump-btn" id="todayBtn" type="button">今天</button>
+            <button class="icon-btn" id="nextMonthBtn" type="button" aria-label="下个月">›</button>
+          </div>
+          <div class="toolbar-right">
+            <div class="language-card">
+                <span class="mini-label" id="languageLabel">语言</span>
+              <select id="languageSelect" aria-label="选择语言">
+                <option value="mixed">中文为主 · 中英简称</option>
+                <option value="zh">全中文</option>
+              </select>
+            </div>
+            <div class="timezone-card">
+              <span class="status-dot"></span>
+              <div>
+                <span class="mini-label" id="timezoneLabel">显示时区</span>
+                <select id="timezoneSelect" aria-label="选择显示时区">
+                  <option value="America/New_York">纽约时间 · ET</option>
+                  <option value="Asia/Shanghai">北京时间 · CST</option>
+                  <option value="Asia/Hong_Kong">香港时间 · HKT</option>
+                  <option value="Europe/London">伦敦时间 · GMT/BST</option>
+                  <option value="UTC">协调世界时 · UTC</option>
+                </select>
+              </div>
+            </div>
+            <div class="storage-card">
+              <div>
+                <span class="mini-label" id="storageLabel">本地存储</span>
+                <strong id="storageUsage">0 KB</strong>
+              </div>
+              <button class="clear-data-btn" id="clearDataBtn" type="button">清理</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="category-row" aria-label="事件筛选">
+          <div class="category-label">显示类别</div>
+          <label class="filter-check all-check"><input type="checkbox" id="filterAll" checked /><span class="check-box"></span><span class="chip-dot all"></span>全部</label>
+          <label class="filter-check"><input type="checkbox" data-filter="macro" checked /><span class="check-box"></span><span class="chip-dot macro"></span>宏观数据<button class="gear-btn" data-gear="macro" type="button" aria-label="设置宏观数据">⚙</button></label>
+          <label class="filter-check"><input type="checkbox" data-filter="fed" checked /><span class="check-box"></span><span class="chip-dot fed"></span>美联储<button class="gear-btn" data-gear="fed" type="button" aria-label="设置美联储数据">⚙</button></label>
+          <label class="filter-check"><input type="checkbox" data-filter="earnings" checked /><span class="check-box"></span><span class="chip-dot earnings"></span>财报<button class="gear-btn" data-gear="earnings" type="button" aria-label="设置财报数据">⚙</button></label>
+          <label class="filter-check"><input type="checkbox" data-filter="company" checked /><span class="check-box"></span><span class="chip-dot company"></span>公司事件<button class="gear-btn" data-gear="company" type="button" aria-label="设置公司事件">⚙</button></label>
+          <label class="filter-check"><input type="checkbox" data-filter="market" checked /><span class="check-box"></span><span class="chip-dot market"></span>市场<button class="gear-btn" data-gear="market" type="button" aria-label="设置市场数据">⚙</button></label>
+        </section>
+        <section class="subfilter-panel" id="subfilterPanel" hidden aria-label="细分类别设置"></section>
+
+        <section class="content-grid">
+          <div class="calendar-card" id="calendarPanel">
+            <div class="calendar-scroll" id="calendarScroll">
+              <div class="weekday-row" aria-hidden="true">
+                <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span class="weekend">周六</span><span class="weekend">周日</span>
+              </div>
+              <div class="calendar-grid continuous-grid" id="calendarGrid" aria-label="连续月历"></div>
+            </div>
+          </div>
+
+          <aside class="side-panel" aria-label="事件详情">
+            <div class="side-panel-head">
+              <div>
+                <p class="section-kicker" id="selectedDayLabel">SELECTED DAY</p>
+                <h3 id="selectedDateTitle">9月3日 · 周四</h3>
+              </div>
+              <span class="event-count" id="selectedCount">1 项</span>
+            </div>
+            <div id="selectedEvents" class="selected-events"></div>
+            <div class="side-divider"></div>
+            <div class="insight-head">
+              <div>
+                <p class="section-kicker" id="marketBriefLabel">MARKET BRIEF</p>
+                <h3>当天进展与预期</h3>
+              </div>
+            </div>
+            <div id="dailyBrief" class="daily-brief"></div>
+          </aside>
+        </section>
+
+        <section class="sources-strip">
+          <div>
+            <p class="section-kicker" id="sourceLinksLabel">SOURCE LINKS</p>
+            <h3>官方日程入口</h3>
+          </div>
+          <div class="source-links">
+            <a id="blsSourceLink" href="https://www.bls.gov/schedule/2026/" target="_blank" rel="noreferrer">BLS · CPI / 非农</a>
+            <a id="fedSourceLink" href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noreferrer">Federal Reserve · FOMC</a>
+            <a id="beaSourceLink" href="https://www.bea.gov/news/schedule/" target="_blank" rel="noreferrer">BEA · GDP / PCE</a>
+            <a id="nasdaqSourceLink" href="https://www.nasdaq.com/market-activity/earnings" target="_blank" rel="noreferrer">Nasdaq · Earnings</a>
+          </div>
+          <button class="outline-btn" id="exportBtn" type="button">导出 .ics</button>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker" id="localEventLabel">LOCAL EVENT</p>
+            <h2 id="modalTitle">添加投资事件</h2>
+          </div>
+          <button class="icon-btn close-btn" id="closeModalBtn" type="button" aria-label="关闭">×</button>
+        </div>
+        <form id="eventForm">
+          <div class="form-grid">
+            <label class="field field-wide">事件名称<input name="title" required maxlength="80" placeholder="例如：TSLA Q3 财报" /></label>
+            <label class="field">日期<input name="date" type="date" required /></label>
+            <label class="field">时间（可选）<input name="time" type="time" /></label>
+            <label class="field">类别<select name="category" id="eventCategory"><option value="macro">宏观数据</option><option value="fed">美联储</option><option value="earnings">财报</option><option value="company">公司事件</option><option value="market">市场</option></select></label>
+            <label class="field">子类<select name="subtype" id="eventSubtype"></select></label>
+            <label class="field">重要程度<select name="importance"><option value="high">高</option><option value="medium" selected>中</option><option value="low">低</option></select></label>
+            <label class="field field-wide">来源链接<input name="url" type="url" placeholder="https://…" /></label>
+            <label class="field field-wide">备注<textarea name="notes" rows="3" maxlength="240" placeholder="例如：日期尚未由公司正式确认"></textarea></label>
+          </div>
+          <div class="form-note">事件会保存在本机浏览器中，不会上传到服务器。</div>
+          <div class="modal-actions"><button class="ghost-btn" id="cancelModalBtn" type="button">取消</button><button class="primary-btn" type="submit">保存事件</button></div>
+        </form>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
