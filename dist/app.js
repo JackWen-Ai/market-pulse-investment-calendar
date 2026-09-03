@@ -157,19 +157,34 @@ function renderSubfilterPanel() {
 function storageSizeLabel() { let bytes = 0; try { for (let index = 0; index < storage.length; index += 1) { const key = storage.key(index); if (key && key.startsWith('market-pulse-')) bytes += key.length + String(storage.getItem(key) || '').length; } } catch (_) {} if (bytes < 1024) return `${bytes} B`; if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(bytes < 10 * 1024 ? 1 : 0)} KB`; return `${(bytes / (1024 * 1024)).toFixed(2)} MB`; }
 function renderStorage() { const node = document.getElementById('storageUsage'); if (node) node.textContent = storageSizeLabel(); }
 function renderLastDataUpdate() {
+  const card = document.querySelector('.last-update-card');
   const node = document.getElementById('lastUpdateValue');
-  if (!node) return;
+  if (!node || !card) return;
+  card.classList.remove('stale', 'pending');
   if (!LAST_DATA_UPDATE_AT) {
     node.textContent = state.language === 'zh' ? '等待云端首次更新' : 'Waiting for cloud update';
+    card.classList.add('stale', 'pending');
+    card.title = state.language === 'zh' ? '尚未收到云端首次成功更新' : 'Waiting for the first verified cloud update';
     return;
   }
   const date = new Date(LAST_DATA_UPDATE_AT);
   if (Number.isNaN(date.getTime())) {
     node.textContent = state.language === 'zh' ? '待核验' : 'Pending verification';
+    card.classList.add('stale', 'pending');
+    card.title = state.language === 'zh' ? '云端更新时间无法核验' : 'Cloud update time could not be verified';
     return;
   }
   const parts = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).formatToParts(date).reduce((result, part) => ({ ...result, [part.type]: part.value }), {});
   node.textContent = `${parts.year}年${parts.month}月${parts.day}日 ${parts.hour}:${parts.minute}:${parts.second}`;
+  const now = new Date();
+  const localToday = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const updateDay = `${parts.year}-${parts.month}-${parts.day}`;
+  if (updateDay !== localToday) {
+    card.classList.add('stale');
+    card.title = state.language === 'zh' ? '云端更新时间不是电脑今天的日期，数据可能尚未同步' : 'The cloud update is not from your computer\'s current date';
+  } else {
+    card.title = state.language === 'zh' ? '云端数据更新时间与电脑今天的日期一致' : 'Cloud data was updated on your computer\'s current date';
+  }
 }
 function applyLanguage() { const full = state.language === 'zh'; const text = { brand: full ? '市场脉搏' : 'MARKET PULSE', selected: full ? '选中日期' : 'SELECTED DAY', brief: full ? '市场简报' : 'MARKET BRIEF', sources: full ? '来源链接' : 'SOURCE LINKS', local: full ? '本地事件' : 'LOCAL EVENT', lastUpdate: full ? '最后数据更新（云端）' : '最后数据更新 · 云端' }; document.title = full ? '投资日历' : 'Market Pulse · 投资日历'; document.getElementById('brandEyebrow').textContent = text.brand; document.getElementById('selectedDayLabel').textContent = text.selected; document.getElementById('marketBriefLabel').textContent = text.brief; document.getElementById('sourceLinksLabel').textContent = text.sources; document.getElementById('localEventLabel').textContent = text.local; document.getElementById('lastUpdateLabel').textContent = text.lastUpdate; const timezoneOptions = full ? ['纽约时间', '北京时间', '香港时间', '伦敦时间', '协调世界时'] : ['纽约时间 · ET', '北京时间 · CST', '香港时间 · HKT', '伦敦时间 · GMT/BST', '协调世界时 · UTC']; document.querySelectorAll('#timezoneSelect option').forEach((option, index) => { option.textContent = timezoneOptions[index]; }); document.getElementById('blsSourceLink').textContent = full ? '美国劳工统计局 · 消费者价格指数 / 非农' : 'BLS · CPI / 非农'; document.getElementById('fedSourceLink').textContent = full ? '美联储 · 联邦公开市场委员会' : 'Federal Reserve · FOMC'; document.getElementById('beaSourceLink').textContent = full ? '美国经济分析局 · 国内生产总值 / 个人消费支出' : 'BEA · GDP / PCE'; document.getElementById('nasdaqSourceLink').textContent = full ? '纳斯达克 · 财报' : 'Nasdaq · Earnings'; document.getElementById('languageSelect').value = state.language; }
 function render(focusMonth = false) { applyLanguage(); renderCalendar(focusMonth); renderSidePanel(); renderSubfilterPanel(); renderStorage(); renderLastDataUpdate(); const allChecked = Object.values(state.filters).every(Boolean); document.getElementById('filterAll').checked = allChecked; document.querySelectorAll('input[data-filter]').forEach(input => { input.checked = Boolean(state.filters[input.dataset.filter]); }); document.getElementById('timezoneSelect').value = state.timezone; }

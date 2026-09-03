@@ -38,6 +38,9 @@ a { color: inherit; }
 .last-update-card .status-dot { background: #78d8c5; box-shadow: 0 0 0 5px rgba(120, 216, 197, .12); }
 .last-update-card .mini-label { color: #9db7d5; margin-bottom: 3px; }
 .last-update-card strong { display: block; color: #fff; font-size: 12px; line-height: 1.25; white-space: nowrap; }
+.last-update-card.stale { border-color: #ff5b5b; background: #d92828; box-shadow: 0 0 0 1px rgba(255, 91, 91, .24), 0 7px 18px rgba(130, 0, 0, .28); }
+.last-update-card.stale .status-dot { background: #fff; box-shadow: 0 0 0 5px rgba(255, 255, 255, .22); }
+.last-update-card.stale .mini-label, .last-update-card.stale strong { color: #fff; }
 .primary-btn, .ghost-btn, .outline-btn, .icon-btn, .gear-btn, .clear-data-btn { border: 0; transition: .18s ease; }
 .primary-btn { background: var(--blue); color: #fff; border-radius: 10px; padding: 11px 16px; font-weight: 700; box-shadow: 0 5px 15px rgba(43, 115, 210, .22); }
 .primary-btn:hover { background: #1d63bc; transform: translateY(-1px); }.primary-btn span { font-size: 17px; margin-right: 3px; }
