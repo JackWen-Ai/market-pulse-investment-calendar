@@ -55,3 +55,14 @@ a { color: inherit; }
 .calendar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
 .calendar-scroll::-webkit-scrollbar { display: none; }
 .calendar-scroll { scroll-behavior: auto; }
+
+/* Cloud data update status; the timestamp always uses Beijing time. */
+.last-update-card { display: flex; flex-direction: column; gap: 5px; padding: 10px 14px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 10px; background: rgba(255, 255, 255, .06); text-align: right; }
+.last-update-label { color: #a8bbd1; font-size: 11px; font-weight: 500; }
+.last-update-value { color: #edf4fc; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 680px) {
+  .topbar { flex-wrap: wrap; }
+  .topbar .top-actions { margin-left: auto; max-width: 100%; gap: 8px; }
+  .last-update-card { padding: 8px 10px; gap: 4px; }
+  .last-update-value { font-size: 11px; }
+}

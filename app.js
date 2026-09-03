@@ -1,3 +1,5 @@
+const LAST_DATA_UPDATE_AT = '';
+
 const seedEvents = [
   { id: 'bls-20260904', date: '2026-09-04', time: '08:30', title: '就业形势（非农）· 8月', category: 'macro', importance: 'high', url: 'https://www.bls.gov/schedule/news_release/empsit.htm', notes: 'BLS 官方发布时间；美国东部时间。' },
   { id: 'bls-20260910', date: '2026-09-10', time: '08:30', title: 'PPI · 8月', category: 'macro', importance: 'medium', url: 'https://www.bls.gov/schedule/news_release/ppi.htm', notes: '生产者价格指数。' },
@@ -153,7 +155,24 @@ function renderSubfilterPanel() {
 }
 function storageSizeLabel() { let bytes = 0; try { for (let index = 0; index < storage.length; index += 1) { const key = storage.key(index); if (key && key.startsWith('market-pulse-')) bytes += key.length + String(storage.getItem(key) || '').length; } } catch (_) {} if (bytes < 1024) return `${bytes} B`; if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(bytes < 10 * 1024 ? 1 : 0)} KB`; return `${(bytes / (1024 * 1024)).toFixed(2)} MB`; }
 function renderStorage() { const node = document.getElementById('storageUsage'); if (node) node.textContent = storageSizeLabel(); }
-function applyLanguage() { const full = state.language === 'zh'; const text = { brand: full ? '市场脉搏' : 'MARKET PULSE', selected: full ? '选中日期' : 'SELECTED DAY', brief: full ? '市场简报' : 'MARKET BRIEF', sources: full ? '来源链接' : 'SOURCE LINKS', local: full ? '本地事件' : 'LOCAL EVENT' }; document.title = full ? '投资日历' : 'Market Pulse · 投资日历'; document.getElementById('brandEyebrow').textContent = text.brand; document.getElementById('selectedDayLabel').textContent = text.selected; document.getElementById('marketBriefLabel').textContent = text.brief; document.getElementById('sourceLinksLabel').textContent = text.sources; document.getElementById('localEventLabel').textContent = text.local; const timezoneOptions = full ? ['纽约时间', '北京时间', '香港时间', '伦敦时间', '协调世界时'] : ['纽约时间 · ET', '北京时间 · CST', '香港时间 · HKT', '伦敦时间 · GMT/BST', '协调世界时 · UTC']; document.querySelectorAll('#timezoneSelect option').forEach((option, index) => { option.textContent = timezoneOptions[index]; }); document.getElementById('blsSourceLink').textContent = full ? '美国劳工统计局 · 消费者价格指数 / 非农' : 'BLS · CPI / 非农'; document.getElementById('fedSourceLink').textContent = full ? '美联储 · 联邦公开市场委员会' : 'Federal Reserve · FOMC'; document.getElementById('beaSourceLink').textContent = full ? '美国经济分析局 · 国内生产总值 / 个人消费支出' : 'BEA · GDP / PCE'; document.getElementById('nasdaqSourceLink').textContent = full ? '纳斯达克 · 财报' : 'Nasdaq · Earnings'; document.getElementById('languageSelect').value = state.language; }
+function renderLastDataUpdate() {
+  const node = document.getElementById('lastUpdateValue');
+  if (!node) return;
+  const date = new Date(LAST_DATA_UPDATE_AT);
+  if (!LAST_DATA_UPDATE_AT || !Number.isFinite(date.getTime())) {
+    node.textContent = '等待云端首次更新';
+    node.removeAttribute('datetime');
+    return;
+  }
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('zh-CN', {
+    timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+  }).formatToParts(date).map(part => [part.type, part.value]));
+  node.textContent = `${parts.year}年${parts.month}月${parts.day}日 ${parts.hour}:${parts.minute}:${parts.second}（北京时间）`;
+  node.setAttribute('datetime', LAST_DATA_UPDATE_AT);
+}
+
+function applyLanguage() { renderLastDataUpdate(); const full = state.language === 'zh'; const text = { brand: full ? '市场脉搏' : 'MARKET PULSE', selected: full ? '选中日期' : 'SELECTED DAY', brief: full ? '市场简报' : 'MARKET BRIEF', sources: full ? '来源链接' : 'SOURCE LINKS', local: full ? '本地事件' : 'LOCAL EVENT' }; document.title = full ? '投资日历' : 'Market Pulse · 投资日历'; document.getElementById('brandEyebrow').textContent = text.brand; document.getElementById('selectedDayLabel').textContent = text.selected; document.getElementById('marketBriefLabel').textContent = text.brief; document.getElementById('sourceLinksLabel').textContent = text.sources; document.getElementById('localEventLabel').textContent = text.local; const timezoneOptions = full ? ['纽约时间', '北京时间', '香港时间', '伦敦时间', '协调世界时'] : ['纽约时间 · ET', '北京时间 · CST', '香港时间 · HKT', '伦敦时间 · GMT/BST', '协调世界时 · UTC']; document.querySelectorAll('#timezoneSelect option').forEach((option, index) => { option.textContent = timezoneOptions[index]; }); document.getElementById('blsSourceLink').textContent = full ? '美国劳工统计局 · 消费者价格指数 / 非农' : 'BLS · CPI / 非农'; document.getElementById('fedSourceLink').textContent = full ? '美联储 · 联邦公开市场委员会' : 'Federal Reserve · FOMC'; document.getElementById('beaSourceLink').textContent = full ? '美国经济分析局 · 国内生产总值 / 个人消费支出' : 'BEA · GDP / PCE'; document.getElementById('nasdaqSourceLink').textContent = full ? '纳斯达克 · 财报' : 'Nasdaq · Earnings'; document.getElementById('languageSelect').value = state.language; }
 function render(focusMonth = false) { applyLanguage(); renderCalendar(focusMonth); renderSidePanel(); renderSubfilterPanel(); renderStorage(); const allChecked = Object.values(state.filters).every(Boolean); document.getElementById('filterAll').checked = allChecked; document.querySelectorAll('input[data-filter]').forEach(input => { input.checked = Boolean(state.filters[input.dataset.filter]); }); document.getElementById('timezoneSelect').value = state.timezone; }
 
 function openModal() { const modal = document.getElementById('modalBackdrop'); modal.hidden = false; const form = document.getElementById('eventForm'); form.reset(); form.elements.date.value = state.selected; form.elements.category.value = 'macro'; refreshEventSubtypeOptions(); setTimeout(() => form.elements.title.focus(), 0); }
