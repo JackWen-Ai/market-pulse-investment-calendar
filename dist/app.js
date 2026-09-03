@@ -1,5 +1,5 @@
 // Updated by the cloud maintenance task after a verified GitHub data update.
-const LAST_DATA_UPDATE_AT = '2026-09-03T21:27:40+08:00';
+const LAST_DATA_UPDATE_AT = '2026-09-04T07:04:06+08:00';
 
 const seedEvents = [
   {"analysis":{"consensus":"暂无可靠一致预期","progress":"日期时间已确认","view":"影响判断：结合就业、通胀及前值修订判断利率预期；方向取决于实际数据相对可靠预期的偏差。"},"category":"macro","date":"2026-09-04","id":"bls-20260904","importance":"high","notes":"BLS 官方发布时间；美国东部时间。 时间统一按纽约EDT（UTC−04:00）记录；北京时间2026-09-04 20:30。","sourceTimeZone":"America/New_York","status":"日期时间已确认","time":"08:30","title":"就业形势（非农）· 8月","url":"https://www.bls.gov/schedule/2026/"},
