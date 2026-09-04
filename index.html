@@ -94,16 +94,27 @@
               </div>
             </div>
 
-            <section class="changelog-panel" id="changelogPanel" aria-label="更新日志">
-              <div class="changelog-head">
-                <div>
-                  <p class="section-kicker">CHANGELOG</p>
-                  <h3>更新日志</h3>
-                </div>
-                <span class="changelog-meta" id="changelogMeta">—</span>
+          <section class="changelog-panel" id="changelogPanel" aria-label="更新日志">
+            <div class="changelog-head">
+              <div>
+                <p class="section-kicker">CHANGELOG</p>
+                <h3>更新日志</h3>
               </div>
-              <div id="changelogList" class="changelog-list"></div>
-            </section>
+              <span class="changelog-meta" id="changelogMeta">—</span>
+            </div>
+            <div class="changelog-controls" id="changelogControls" hidden>
+              <div class="changelog-time-block">
+                <span>更新前</span>
+                <strong id="changelogBeforeTime">—</strong>
+              </div>
+              <span class="changelog-arrow" aria-hidden="true">→</span>
+              <label class="changelog-time-block changelog-after-block">
+                <span>更新后（选择版本）</span>
+                <select id="changelogAfterVersion" aria-label="选择更新后的历史版本"></select>
+              </label>
+            </div>
+            <div id="changelogList" class="changelog-list"></div>
+          </section>
           </div>
 
           <aside class="side-panel" aria-label="事件详情">
