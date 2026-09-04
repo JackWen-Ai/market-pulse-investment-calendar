@@ -1,5 +1,5 @@
 // Updated by the cloud maintenance task after a verified GitHub data update.
-const LAST_DATA_UPDATE_AT = '2026-09-04T13:06:31+08:00';
+const LAST_DATA_UPDATE_AT = '2026-09-04T07:04:06+08:00';
 const CURRENT_LAYOUT_VERSION = '2026-09-v1';
 const HISTORY_STORAGE_KEY = 'market-pulse-history-v2';
 const REMOTE_HISTORY_URL = 'data/history.json';
