@@ -23,9 +23,8 @@
             <div>
               <span class="mini-label" id="lastUpdateLabel">最后数据更新（云端）</span>
               <strong id="lastUpdateValue">等待云端首次更新</strong>
+              </div>
             </div>
-          </div>
-          <button class="primary-btn" id="addEventBtn" type="button"><span aria-hidden="true">＋</span> 添加事件</button>
         </div>
       </header>
 
@@ -152,32 +151,6 @@
         </section>
 
       </main>
-    </div>
-
-    <div class="modal-backdrop" id="modalBackdrop" hidden>
-      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-head">
-          <div>
-            <p class="section-kicker" id="localEventLabel">LOCAL EVENT</p>
-            <h2 id="modalTitle">添加投资事件</h2>
-          </div>
-          <button class="icon-btn close-btn" id="closeModalBtn" type="button" aria-label="关闭">×</button>
-        </div>
-        <form id="eventForm">
-          <div class="form-grid">
-            <label class="field field-wide">事件名称<input name="title" required maxlength="80" placeholder="例如：TSLA Q3 财报" /></label>
-            <label class="field">日期<input name="date" type="date" required /></label>
-            <label class="field">时间（可选）<input name="time" type="time" /></label>
-            <label class="field">类别<select name="category" id="eventCategory"><option value="macro">宏观数据</option><option value="fed">美联储</option><option value="earnings">财报</option><option value="company">公司事件</option><option value="market">市场</option></select></label>
-            <label class="field">子类<select name="subtype" id="eventSubtype"></select></label>
-            <label class="field">重要程度<select name="importance"><option value="high">高</option><option value="medium" selected>中</option><option value="low">低</option></select></label>
-            <label class="field field-wide">来源链接<input name="url" type="url" placeholder="https://…" /></label>
-            <label class="field field-wide">备注<textarea name="notes" rows="3" maxlength="240" placeholder="例如：日期尚未由公司正式确认"></textarea></label>
-          </div>
-          <div class="form-note">事件会保存在本机浏览器中，不会上传到服务器。</div>
-          <div class="modal-actions"><button class="ghost-btn" id="cancelModalBtn" type="button">取消</button><button class="primary-btn" type="submit">保存事件</button></div>
-        </form>
-      </section>
     </div>
 
     <div class="modal-backdrop" id="historyBackdrop" hidden>
