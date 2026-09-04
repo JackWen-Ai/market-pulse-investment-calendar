@@ -151,3 +151,9 @@ a { color: inherit; }
 .storage-menu button { width: 100%; padding: 8px 9px; border: 0; border-radius: 7px; color: var(--ink-2); background: transparent; font-size: 11px; font-weight: 650; text-align: left; }
 .storage-menu button:hover { color: var(--blue); background: #eef5ff; }
 @media (max-width: 680px) { .history-btn { padding: 6px 8px; font-size: 11px; }.changelog-panel { padding: 16px; }.changelog-head { align-items: flex-start; flex-direction: column; gap: 5px; }.changelog-meta { text-align: left; }.changelog-controls { grid-template-columns: 1fr; gap: 7px; }.changelog-arrow { display: none; }.changelog-grid { grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1fr); }.changelog-grid-head:nth-child(4), .changelog-grid-cell:nth-child(4n) { grid-column: 2 / -1; }.changelog-item ul { grid-template-columns: 1fr; }.history-modal { padding: 17px; }.history-day { min-height: 38px; } }
+
+
+.month-title-wrap > #monthMeta { display: flex; width: 100%; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; margin-top: 4px; text-align: center; }
+.month-title-wrap > #monthMeta .month-meta-item { display: inline-flex; width: auto; margin: 0; white-space: nowrap; }
+.month-title-wrap > #monthMeta .month-meta-item + .month-meta-item::before { margin-right: 8px; color: var(--line-strong); content: "·"; }
+.changelog-sequence span { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; font-weight: 650; }
