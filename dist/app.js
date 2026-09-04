@@ -379,14 +379,21 @@ const seedEvents = [
     "url": "https://www.bls.gov/schedule/2026/"
   },
   {
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "日期时间已确认",
+      "view": "影响判断：结合就业、通胀及前值修订判断利率预期；方向取决于实际数据相对可靠预期的偏差。"
+    },
     "category": "macro",
     "date": "2026-12-04",
     "id": "bls-20261204",
     "importance": "high",
-    "notes": "BLS 官方发布时间；美国东部时间。",
+    "notes": "BLS 官方发布时间；美国东部时间。 时间统一按纽约EST（UTC−05:00）记录；北京时间2026-12-04 21:30。",
+    "sourceTimeZone": "America/New_York",
+    "status": "日期时间已确认",
     "time": "08:30",
     "title": "就业形势（非农）· 11月",
-    "url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    "url": "https://www.bls.gov/schedule/2026/"
   },
   {
     "category": "fed",
