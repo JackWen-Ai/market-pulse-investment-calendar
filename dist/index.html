@@ -37,6 +37,7 @@
               <h2 id="monthTitle">2026年9月</h2>
               <span id="monthMeta">—</span>
             </div>
+            <button class="history-btn" id="historyBtn" type="button">回溯</button>
             <button class="today-jump-btn" id="todayBtn" type="button">今天</button>
             <button class="icon-btn" id="nextMonthBtn" type="button" aria-label="下个月">›</button>
           </div>
@@ -125,6 +126,17 @@
           </div>
           <button class="outline-btn" id="exportBtn" type="button">导出 .ics</button>
         </section>
+
+        <section class="changelog-panel" id="changelogPanel" aria-label="更新日志">
+          <div class="changelog-head">
+            <div>
+              <p class="section-kicker">CHANGELOG</p>
+              <h3>更新日志</h3>
+            </div>
+            <span class="changelog-meta" id="changelogMeta">—</span>
+          </div>
+          <div id="changelogList" class="changelog-list"></div>
+        </section>
       </main>
     </div>
 
@@ -151,6 +163,26 @@
           <div class="form-note">事件会保存在本机浏览器中，不会上传到服务器。</div>
           <div class="modal-actions"><button class="ghost-btn" id="cancelModalBtn" type="button">取消</button><button class="primary-btn" type="submit">保存事件</button></div>
         </form>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="historyBackdrop" hidden>
+      <section class="modal history-modal" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">HISTORY</p>
+            <h2 id="historyModalTitle">回溯历史页面</h2>
+          </div>
+          <button class="icon-btn close-btn" id="closeHistoryBtn" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="history-picker-head">
+          <button class="icon-btn" id="historyPrevMonthBtn" type="button" aria-label="上个月">‹</button>
+          <strong id="historyMonthTitle">2026年9月</strong>
+          <button class="icon-btn" id="historyNextMonthBtn" type="button" aria-label="下个月">›</button>
+        </div>
+        <div class="history-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+        <div class="history-calendar-grid" id="historyCalendarGrid"></div>
+        <p class="history-note" id="historyNote">只显示已经保存快照的日期。每天首次打开页面时会保存当天版本。</p>
       </section>
     </div>
 
