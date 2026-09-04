@@ -66,7 +66,13 @@
                 <span class="mini-label" id="storageLabel">本地存储</span>
                 <strong id="storageUsage">0 KB</strong>
               </div>
-              <button class="clear-data-btn" id="clearDataBtn" type="button">清理</button>
+              <button class="storage-settings-btn" id="storageSettingsBtn" type="button" aria-label="本地存储设置" aria-expanded="false">⚙</button>
+              <div class="storage-menu" id="storageMenu" hidden>
+                <button type="button" id="pruneHistoryBtn">清理旧历史（保留最近 2 个版本）</button>
+                <button type="button" id="exportDataBtn">导出全部数据归档</button>
+                <button type="button" id="importDataBtn">导入数据归档</button>
+                <input id="importDataInput" type="file" accept="application/json,.json" hidden />
+              </div>
             </div>
           </div>
         </section>
