@@ -290,7 +290,7 @@ function renderLastDataUpdate() {
   }
 }
 function applyLanguage() { const full = state.language === 'zh'; const text = { brand: full ? '市场脉搏' : 'MARKET PULSE', selected: full ? '选中日期' : 'SELECTED DAY', brief: full ? '市场简报' : 'MARKET BRIEF', sources: full ? '来源链接' : 'SOURCE LINKS', lastUpdate: full ? '最后数据更新（云端）' : '最后数据更新 · 云端' }; document.title = full ? '投资日历' : 'Market Pulse · 投资日历'; document.getElementById('brandEyebrow').textContent = text.brand; document.getElementById('selectedDayLabel').textContent = text.selected; document.getElementById('marketBriefLabel').textContent = text.brief; document.getElementById('sourceLinksLabel').textContent = text.sources; document.getElementById('lastUpdateLabel').textContent = text.lastUpdate; const timezoneOptions = full ? ['纽约时间', '北京时间', '香港时间', '伦敦时间', '协调世界时'] : ['纽约时间 · ET', '北京时间 · CST', '香港时间 · HKT', '伦敦时间 · GMT/BST', '协调世界时 · UTC']; document.querySelectorAll('#timezoneSelect option').forEach((option, index) => { option.textContent = timezoneOptions[index]; }); document.getElementById('blsSourceLink').textContent = full ? '美国劳工统计局 · 消费者价格指数 / 非农' : 'BLS · CPI / 非农'; document.getElementById('fedSourceLink').textContent = full ? '美联储 · 联邦公开市场委员会' : 'Federal Reserve · FOMC'; document.getElementById('beaSourceLink').textContent = full ? '美国经济分析局 · 国内生产总值 / 个人消费支出' : 'BEA · GDP / PCE'; document.getElementById('nasdaqSourceLink').textContent = full ? '纳斯达克 · 财报' : 'Nasdaq · Earnings'; document.getElementById('languageSelect').value = state.language; }
-function render(focusMonth = false) { applyLanguage(); updateHistoryButton(); renderCalendar(focusMonth); renderSidePanel(); renderSubfilterPanel(); renderChangelog(); renderStorage(); renderLastDataUpdate(); const allChecked = Object.values(state.filters).every(Boolean); document.getElementById('filterAll').checked = allChecked; document.querySelectorAll('input[data-filter]').forEach(input => { input.checked = Boolean(state.filters[input.dataset.filter]); }); document.getElementById('timezoneSelect').value = state.timezone; }
+function render(focusMonth = false) { applyLanguage(); updateHistoryButton(); renderCalendar(focusMonth); renderSidePanel(); renderSubfilterPanel(); renderChangelog(); renderStorage(); renderLastDataUpdate(); renderVersionChangeSummary(); const allChecked = Object.values(state.filters).every(Boolean); document.getElementById('filterAll').checked = allChecked; document.querySelectorAll('input[data-filter]').forEach(input => { input.checked = Boolean(state.filters[input.dataset.filter]); }); document.getElementById('timezoneSelect').value = state.timezone; }
 
 function exportIcs() { const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Market Pulse//Investment Events//ZH', 'CALSCALE:GREGORIAN', `X-WR-CALNAME:Market Pulse 投资事件 · ${timezoneLabel(state.timezone)}`]; visibleEvents().forEach(event => { const displayDate = eventDisplayDate(event).replaceAll('-', ''); const instant = eventInstant(event); let startLine; let endLine = ''; if (instant) { const parts = getZonedParts(instant, state.timezone); const stamp = `${parts.year}${String(parts.month).padStart(2, '0')}${String(parts.day).padStart(2, '0')}T${String(parts.hour).padStart(2, '0')}${String(parts.minute).padStart(2, '0')}00`; startLine = `DTSTART;TZID=${state.timezone}:${stamp}`; const end = new Date(instant.getTime() + 30 * 60 * 1000); const endParts = getZonedParts(end, state.timezone); endLine = `DTEND;TZID=${state.timezone}:${endParts.year}${String(endParts.month).padStart(2, '0')}${String(endParts.day).padStart(2, '0')}T${String(endParts.hour).padStart(2, '0')}${String(endParts.minute).padStart(2, '0')}00`; } else { startLine = `DTSTART;VALUE=DATE:${displayDate}`; } lines.push('BEGIN:VEVENT', `UID:${event.id}@market-pulse.local`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}`, startLine, ...(endLine ? [endLine] : []), `SUMMARY:${icsEscape(localizeText(event.title))}`, `CATEGORIES:${icsEscape(categoryNames[event.category] || event.category)}`, ...(event.url ? [`URL:${event.url}`] : []), ...(event.notes ? [`DESCRIPTION:${icsEscape(localizeText(event.notes))}`] : []), 'END:VEVENT'); }); lines.push('END:VCALENDAR'); const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'market-pulse-investment-events.ics'; a.click(); URL.revokeObjectURL(url); }
 function icsEscape(value) { return String(value).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
@@ -370,3 +370,19 @@ changeMonth = function changeMonth(delta) {
 };
 
 loadEvents(); loadHistorySnapshots(); archivePastEvents(); captureHistorySnapshot(); render(true); loadRemoteHistory();
+
+function renderVersionChangeSummary() {
+  const node = document.getElementById('versionChangeSummary');
+  if (!node) return;
+  const current = activeSnapshot();
+  const previous = previousSnapshotFor(current);
+  node.classList.remove('has-changes');
+  if (!previous || !current || current.versionIndex < 0) {
+    node.textContent = '本版本相较于前版本：暂无可比版本';
+    return;
+  }
+  const diff = diffSnapshots(previous, current);
+  const count = diff.added.length + diff.removed.length + diff.changed.length;
+  node.textContent = `本版本相较于前版本：${count} 处更新`;
+  node.classList.toggle('has-changes', count > 0);
+}
