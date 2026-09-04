@@ -84,13 +84,26 @@
         <section class="subfilter-panel" id="subfilterPanel" hidden aria-label="细分类别设置"></section>
 
         <section class="content-grid">
-          <div class="calendar-card" id="calendarPanel">
-            <div class="calendar-scroll" id="calendarScroll">
-              <div class="weekday-row" aria-hidden="true">
-                <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span class="weekend">周六</span><span class="weekend">周日</span>
+          <div class="calendar-column">
+            <div class="calendar-card" id="calendarPanel">
+              <div class="calendar-scroll" id="calendarScroll">
+                <div class="weekday-row" aria-hidden="true">
+                  <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span class="weekend">周六</span><span class="weekend">周日</span>
+                </div>
+                <div class="calendar-grid continuous-grid" id="calendarGrid" aria-label="连续月历"></div>
               </div>
-              <div class="calendar-grid continuous-grid" id="calendarGrid" aria-label="连续月历"></div>
             </div>
+
+            <section class="changelog-panel" id="changelogPanel" aria-label="更新日志">
+              <div class="changelog-head">
+                <div>
+                  <p class="section-kicker">CHANGELOG</p>
+                  <h3>更新日志</h3>
+                </div>
+                <span class="changelog-meta" id="changelogMeta">—</span>
+              </div>
+              <div id="changelogList" class="changelog-list"></div>
+            </section>
           </div>
 
           <aside class="side-panel" aria-label="事件详情">
@@ -127,16 +140,6 @@
           <button class="outline-btn" id="exportBtn" type="button">导出 .ics</button>
         </section>
 
-        <section class="changelog-panel" id="changelogPanel" aria-label="更新日志">
-          <div class="changelog-head">
-            <div>
-              <p class="section-kicker">CHANGELOG</p>
-              <h3>更新日志</h3>
-            </div>
-            <span class="changelog-meta" id="changelogMeta">—</span>
-          </div>
-          <div id="changelogList" class="changelog-list"></div>
-        </section>
       </main>
     </div>
 
