@@ -1,10 +1,10 @@
 // Updated by the cloud maintenance task after a verified GitHub data update.
-const LAST_DATA_UPDATE_AT = '';
+const LAST_DATA_UPDATE_AT = '2026-09-04T13:06:31+08:00';
 const CURRENT_LAYOUT_VERSION = '2026-09-v1';
 const HISTORY_STORAGE_KEY = 'market-pulse-history-v2';
 
 const seedEvents = [
-  { id: 'bls-20260904', date: '2026-09-04', time: '08:30', title: '就业形势（非农）· 8月', category: 'macro', importance: 'high', url: 'https://www.bls.gov/schedule/news_release/empsit.htm', notes: 'BLS 官方发布时间；美国东部时间。' },
+  { id: 'bls-20260904', date: '2026-09-04', time: '08:30', title: '就业形势（非农）· 8月', category: 'macro', importance: 'high', url: 'https://www.bls.gov/schedule/news_release/empsit.htm', notes: 'BLS 官方发布时间；美国东部时间。已完成本地日历复核，实际值与市场一致预期待官方发布。' },
   { id: 'bls-20260910', date: '2026-09-10', time: '08:30', title: 'PPI · 8月', category: 'macro', importance: 'medium', url: 'https://www.bls.gov/schedule/news_release/ppi.htm', notes: '生产者价格指数。' },
   { id: 'bls-20260911', date: '2026-09-11', time: '08:30', title: 'CPI · 8月', category: 'macro', importance: 'high', url: 'https://www.bls.gov/schedule/news_release/cpi.htm', notes: '消费者价格指数；美国东部时间。' },
   { id: 'fed-20260915', date: '2026-09-15', time: '', title: 'FOMC 会议（第1天）', category: 'fed', importance: 'high', url: 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm', notes: '9月15–16日；利率决定通常在第2天发布。' },
