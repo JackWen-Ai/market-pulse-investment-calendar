@@ -2594,8 +2594,70 @@ function readStorageJson(key, fallback) { try { const value = JSON.parse(storage
 function externalHistoryVersions(history, date) { const value = history?.[date]; if (Array.isArray(value)) return value; if (value && Array.isArray(value.versions)) return value.versions; return value && typeof value === 'object' ? [value] : []; }
 function resolveExternalSnapshot(history, date, versionRef = 'latest', seen = new Set()) { const versions = externalHistoryVersions(history, date); if (!versions.length) return null; const requested = versionRef === 'latest' || versionRef === null || versionRef === undefined ? versions.length - 1 : (typeof versionRef === 'number' ? versionRef : versions.findIndex(record => record.versionId === versionRef)); const index = requested >= 0 && requested < versions.length ? requested : versions.length - 1; const key = `${date}#${index}`; if (seen.has(key)) return null; seen.add(key); const record = versions[index]; let events = record.events; if (!Array.isArray(events) && record.baseDate) events = resolveExternalSnapshot(history, record.baseDate, record.baseVersion ?? 'latest', seen)?.events; return { ...record, date, versionIndex: index, versionId: record.versionId || `${date}#${index + 1}`, events: Array.isArray(events) ? events : [] }; }
 function materializeHistory(history) { const output = {}; Object.keys(history || {}).filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)).forEach(date => { const versions = externalHistoryVersions(history, date); output[date] = { versions: versions.map((record, index) => { const resolved = resolveExternalSnapshot(history, date, index) || { events: record.events || [] }; const item = { ...record, date, versionId: record.versionId || `${date}#${index + 1}`, events: cloneData(resolved.events || []) }; delete item.baseDate; delete item.baseVersion; delete item.versionIndex; return item; }) }; }); return output; }
-function historyRecordFingerprint(record, eventsOverride = record.events || []) { return JSON.stringify({ versionId: record.versionId || '', capturedAt: record.capturedAt || '', eventHash: record.eventHash || '', lastDataUpdateAt: record.lastDataUpdateAt || '', layoutVersion: record.layoutVersion || '', ui: record.ui || {}, events: eventsOverride || [] }); }
-function mergeHistoryData(incomingHistory) { const incomingDates = Object.keys(incomingHistory || {}).filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)); if (!incomingDates.length) return { conflicts: 0, duplicates: 0 }; const incoming = materializeHistory(incomingHistory); const merged = {}; const dates = new Set([...historyDates(), ...Object.keys(incoming)]); let conflicts = 0; let duplicates = 0; dates.forEach(date => { const localRecords = rawHistoryVersions(date).map((record, index) => ({ ...record, versionId: record.versionId || `${date}#${index + 1}`, __events: resolveSnapshot(date, index)?.events || record.events || [] })); const records = localRecords.map(({ __events, ...record }) => record); const fingerprints = new Set(localRecords.map(record => historyRecordFingerprint(record, record.__events))); (incoming[date]?.versions || []).forEach(record => { const fingerprint = historyRecordFingerprint(record, record.events || []); if (fingerprints.has(fingerprint)) { duplicates += 1; return; } let versionId = record.versionId || `${date}#${records.length + 1}`; if (records.some(item => item.versionId === versionId)) { conflicts += 1; versionId = `${versionId}-import-${Date.now()}-${conflicts}`; } const next = { ...record, versionId }; records.push(next); fingerprints.add(historyRecordFingerprint(next, next.events || [])); }); const outputRecords = records.map(record => { const item = { ...record }; delete item.date; delete item.versionIndex; return item; }); merged[date] = { versions: outputRecords }; }); state.history = merged; return { conflicts, duplicates }; }
+/* A history version represents a data/layout state, not the time it was read or
+   the viewer's local display preferences. Keeping those volatile fields out of
+   the merge key prevents a refresh from turning the same cloud snapshot into a
+   new version. */
+function historyRecordFingerprint(record, eventsOverride = record.events || []) {
+  const events = Array.isArray(eventsOverride) ? eventsOverride : [];
+  const eventIdentity = events.length ? eventsSignature(events) : (record.eventHash || '');
+  return JSON.stringify({
+    eventIdentity,
+    lastDataUpdateAt: record.lastDataUpdateAt || '',
+    layoutVersion: record.layoutVersion || ''
+  });
+}
+function mergeHistoryData(incomingHistory) {
+  const incomingDates = Object.keys(incomingHistory || {}).filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date));
+  if (!incomingDates.length) return { conflicts: 0, duplicates: 0 };
+  const incoming = materializeHistory(incomingHistory);
+  const merged = {};
+  const dates = new Set([...historyDates(), ...Object.keys(incoming)]);
+  let conflicts = 0;
+  let duplicates = 0;
+  dates.forEach(date => {
+    const localRecords = rawHistoryVersions(date).map((record, index) => ({
+      ...record,
+      versionId: record.versionId || `${date}#${index + 1}`,
+      __events: resolveSnapshot(date, index)?.events || record.events || []
+    }));
+    const records = [];
+    const fingerprints = new Set();
+    localRecords.forEach(({ __events, ...record }) => {
+      const fingerprint = historyRecordFingerprint(record, __events);
+      if (fingerprints.has(fingerprint)) {
+        duplicates += 1;
+        return;
+      }
+      records.push(record);
+      fingerprints.add(fingerprint);
+    });
+    (incoming[date]?.versions || []).forEach(record => {
+      const fingerprint = historyRecordFingerprint(record, record.events || []);
+      if (fingerprints.has(fingerprint)) {
+        duplicates += 1;
+        return;
+      }
+      let versionId = record.versionId || `${date}#${records.length + 1}`;
+      if (records.some(item => item.versionId === versionId)) {
+        conflicts += 1;
+        versionId = `${versionId}-import-${Date.now()}-${conflicts}`;
+      }
+      const next = { ...record, versionId };
+      records.push(next);
+      fingerprints.add(historyRecordFingerprint(next, next.events || []));
+    });
+    const outputRecords = records.map(record => {
+      const item = { ...record };
+      delete item.date;
+      delete item.versionIndex;
+      return item;
+    });
+    merged[date] = { versions: outputRecords };
+  });
+  state.history = merged;
+  return { conflicts, duplicates };
+}
 function pruneHistory() { const all = []; const materialized = materializeHistory(state.history); Object.entries(materialized).forEach(([date, value]) => value.versions.forEach(record => all.push({ ...record, date }))); if (all.length <= 2) { window.alert('当前最多只有 2 个版本，无需清理。'); return; } if (!window.confirm(`将删除较早的 ${all.length - 2} 个版本，只保留最新 2 个版本用于前后对比。确定继续吗？`)) return; all.sort((a, b) => String(a.capturedAt || a.lastDataUpdateAt || '').localeCompare(String(b.capturedAt || b.lastDataUpdateAt || ''))); const keep = all.slice(-2); const next = {}; keep.forEach(record => { const { date, ...item } = record; if (!next[date]) next[date] = { versions: [] }; next[date].versions.push(item); }); state.history = next; saveHistorySnapshots(); storage.removeItem('market-pulse-history-v1'); if (state.historyDate && !state.history[state.historyDate]) exitHistory(); else render(true); window.alert(`已清理 ${all.length - keep.length} 个旧版本，保留最新 2 个版本。`); }
 function archivePayload() { return { schema: 'market-pulse-investment-calendar-archive', schemaVersion: 2, exportedAt: new Date().toISOString(), events: state.events.filter(event => !event.seed).map(event => cloneData(event)), updates: cloneData(readStorageJson('market-pulse-updates-v1', {})), history: cloneData(state.history), preferences: { filters: cloneData(state.filters), subfilters: cloneData(state.subfilters), timezone: state.timezone, language: state.language } }; }
 function downloadJson(filename, payload) { const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = filename; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url); }
