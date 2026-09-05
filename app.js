@@ -759,16 +759,39 @@ const seedEvents = [
     "url": "https://cdn.cboe.com/resources/options/Cboe2026OPTIONSCalendar.pdf"
   },
   {
-    "added": [],
+    "added": [
+      "S&P 100：Dell Technologies (DELL)",
+      "S&P 100：Palo Alto Networks (PANW)",
+      "S&P 100：Arista Networks (ANET)",
+      "S&P 100：Sandisk (SNDK)",
+      "S&P 500：Bloom Energy (BE)",
+      "S&P 500：Everpure (P)",
+      "S&P 500：Illumina (ILMN)",
+      "S&P MidCap 400：HubSpot (HUBS)",
+      "S&P MidCap 400：AGNC Investment (AGNC)",
+      "S&P MidCap 400：Corcept Therapeutics (CORT)",
+      "S&P MidCap 400：Brinker International (EAT)",
+      "S&P SmallCap 600：Herc Holdings (HRI)",
+      "S&P SmallCap 600：Delek US Holdings (DK)",
+      "S&P SmallCap 600：AXT (AXTI)",
+      "S&P SmallCap 600：Arcutis Biotherapeutics (ARQT)",
+      "S&P SmallCap 600：AtriCure (ATRC)",
+      "S&P SmallCap 600：Capri Holdings (CPRI)",
+      "S&P SmallCap 600：Boston Beer (SAM)",
+      "S&P SmallCap 600：Molson Coors Beverage (TAP)",
+      "S&P SmallCap 600：The Trade Desk (TTD)",
+      "S&P SmallCap 600：Builders FirstSource (BLDR)"
+    ],
     "analysis": {
       "consensus": "暂无可靠一致预期",
-      "progress": "预计季度权重窗口 · 纳入/移出名单待公告",
-      "view": "影响判断：调仓可能增加收盘竞价成交；名单、权重和流动性决定影响，尚不能估算个股被动资金规模。"
+      "progress": "官方名单及生效安排已确认",
+      "view": "影响判断：成分调整将在生效日前后带来对应指数基金的被动买卖需求，并可能放大相关股票开盘前后及前一交易日收盘竞价的成交与波动；具体资金规模取决于跟踪资产、权重和执行安排。"
     },
     "category": "market",
-    "date": "2026-09-18",
-    "effective": "预计2026年9月18日纽约收盘后（EDT）；本轮具体安排待公告",
+    "date": "2026-09-21",
+    "effective": "2026年9月21日纽约市场开盘前生效（EDT）",
     "funds": [
+      "OEF",
       "SPY",
       "VOO",
       "IVV",
@@ -777,18 +800,41 @@ const seedEvents = [
       "SPSM"
     ],
     "id": "market-20260918-rebalance",
-    "importance": "medium",
-    "indexName": "标普500、标普中盘400、标普小盘600",
-    "notes": "S&P官方方法论规定季度股份数更新；标普1500成分变更按需要进行，并非每季固定更换公司。保留原有NYSE日历窗口，具体本轮公告待核验；不猜测成分股。SPSM跟踪标普600的关系由State Street官方基金页确认。 具体时刻待确认；无时刻日期不做跨时区换日。",
-    "removed": [],
-    "status": "预计季度权重窗口 · 纳入/移出名单待公告",
+    "importance": "high",
+    "indexName": "标普100、标普500、标普中盘400、标普小盘600",
+    "notes": "S&P DJI 于2026年9月4日正式公告季度调整名单，相关变更于9月21日纽约市场开盘前生效。纳入/移出数组按官方公告逐项记录；跨指数迁移的公司会同时出现在相应指数的纳入和移出记录中。 时间统一按纽约EDT（UTC−04:00）记录；北京时间2026-09-21 21:30。",
+    "removed": [
+      "S&P 100：Honeywell Aerospace (HONA)",
+      "S&P 100：NIKE (NKE)",
+      "S&P 100：Simon Property Group (SPG)",
+      "S&P 100：Colgate-Palmolive (CL)",
+      "S&P 500：Molson Coors Beverage (TAP)",
+      "S&P 500：The Trade Desk (TTD)",
+      "S&P 500：Builders FirstSource (BLDR)",
+      "S&P MidCap 400：Boston Beer (SAM)",
+      "S&P MidCap 400：Capri Holdings (CPRI)",
+      "S&P MidCap 400：Everpure (P)",
+      "S&P MidCap 400：Illumina (ILMN)",
+      "S&P SmallCap 600：N-able (NABL)",
+      "S&P SmallCap 600：Shenandoah Telecommunications (SHEN)",
+      "S&P SmallCap 600：Matthews International (MATW)",
+      "S&P SmallCap 600：Verra Mobility (VRRM)",
+      "S&P SmallCap 600：Franklin BSP Realty Trust (FBRT)",
+      "S&P SmallCap 600：NexPoint Residential Trust (NXRT)",
+      "S&P SmallCap 600：Amerisafe (AMSF)",
+      "S&P SmallCap 600：Cogent Communications Holdings (CCOI)",
+      "S&P SmallCap 600：Corcept Therapeutics (CORT)",
+      "S&P SmallCap 600：Brinker International (EAT)"
+    ],
+    "status": "官方名单及生效安排已确认",
     "subtypes": [
       "passive",
       "rebalance"
     ],
-    "time": "",
-    "title": "指数基金被动调仓 · 标普500/400/600季度窗口（预计）",
-    "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf"
+    "time": "09:30",
+    "title": "指数基金被动调仓 · 标普100/500/400/600季度调整（已公告）",
+    "url": "https://www.spglobal.com/spdji/en/documents/indexnews/announcements/20260904-1484999/1484999_shuffle5461-sept2026.pdf",
+    "sourceTimeZone": "America/New_York"
   },
   {
     "added": [],
@@ -2415,6 +2461,35 @@ const seedEvents = [
     "time": "",
     "title": "Russell 半年度重构 · 名单锁定期开始",
     "url": "https://www.lseg.com/en/media-centre/press-releases/ftse-russell/2026/ftse-russell-announces-december-2026-russell-us-indexes-reconstitution-schedule"
+  },
+  {
+    "added": [],
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "时间表已确认 · 纳入/移出名单待公告",
+      "view": "影响判断：名单更新可能改变市场对最终调仓流向的预期；在官方名单发布前不估算个股被动资金规模。"
+    },
+    "category": "market",
+    "date": "2026-12-04",
+    "effective": "2026年12月11日美国股市收盘后（纽约EST）；12月14日开盘使用新指数",
+    "funds": [
+      "IWB",
+      "IWM",
+      "IWV"
+    ],
+    "id": "market-20261204-russell-notice",
+    "importance": "medium",
+    "indexName": "Russell 1000/2000/3000",
+    "notes": "FTSE Russell 官方重构页面列明12月4日为初步名单更新日；截至本次核验名单尚未公布，纳入/移出数组保持为空，不作猜测。具体发布时间待官方公告。",
+    "removed": [],
+    "status": "时间表已确认 · 纳入/移出名单待公告",
+    "subtypes": [
+      "passive",
+      "rebalance"
+    ],
+    "time": "",
+    "title": "Russell 半年度重构 · 初步名单更新",
+    "url": "https://www.lseg.com/en/ftse-russell/russell-reconstitution"
   },
   {
     "id": "cloud-macro-20261202-0830",
