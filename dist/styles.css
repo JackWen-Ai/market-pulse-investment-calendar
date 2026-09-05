@@ -157,3 +157,41 @@ a { color: inherit; }
 .month-title-wrap > #monthMeta .month-meta-item { display: inline-flex; width: auto; margin: 0; white-space: nowrap; }
 .month-title-wrap > #monthMeta .month-meta-item + .month-meta-item::before { margin-right: 8px; color: var(--line-strong); content: "·"; }
 .changelog-sequence span { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; font-weight: 650; }
+
+/* Cloud history data management. */
+.data-management-modal { width: min(760px, 100%); }
+.data-management-head-actions { display: inline-flex; align-items: center; gap: 7px; }
+.trash-btn { display: inline-grid; width: 28px; height: 28px; place-items: center; border: 1px solid #d7e2ec; border-radius: 7px; color: #70849a; background: #fff; font-size: 16px; line-height: 1; transition: .18s ease; }
+.trash-btn:hover { color: #b64d3e; border-color: #f0c8c0; background: #fff3f0; }
+.data-management-note { margin: -4px 0 15px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.data-management-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 10px 11px; border: 1px solid var(--line); border-radius: 10px; background: #f8fbfe; }
+.data-select-all { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-2); font-size: 11px; font-weight: 750; cursor: pointer; }
+.data-select-all input, .data-record-check { accent-color: var(--blue); }
+.data-management-summary { flex: 1 1 auto; color: var(--muted); font-size: 11px; }
+.danger-btn { border: 1px solid #f0c8c0; border-radius: 8px; color: #b64d3e; background: #fff3f0; padding: 7px 10px; font-size: 11px; font-weight: 750; }
+.danger-btn:hover:not(:disabled) { color: #fff; border-color: var(--coral); background: var(--coral); }
+.danger-btn:disabled { cursor: not-allowed; opacity: .48; }
+.data-export-btn { padding: 7px 10px; color: var(--ink-2); border-color: var(--line-strong); background: #fff; font-size: 11px; }
+.data-management-list { display: flex; max-height: min(480px, 55vh); flex-direction: column; gap: 13px; overflow: auto; margin-top: 14px; padding-right: 3px; }
+.data-date-group { display: flex; flex-direction: column; gap: 6px; }
+.data-date-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 0 3px; color: var(--ink-2); font-size: 12px; font-weight: 800; }
+.data-date-head span { color: var(--muted-2); font-size: 10px; font-weight: 650; }
+.data-record-row { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 46px; padding: 8px 9px; border: 1px solid var(--line); border-radius: 9px; background: #fbfdff; }
+.data-record-row:hover { border-color: #b9d4f5; background: #f7fbff; }
+.data-record-check { width: 14px; height: 14px; }
+.data-record-index { color: var(--blue); font-size: 14px; font-weight: 850; text-align: center; }
+.data-record-main { min-width: 0; }
+.data-record-main strong { display: block; overflow: hidden; color: var(--ink-2); font-size: 11px; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.data-record-main span { display: block; margin-top: 3px; overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.data-record-main small { display: block; margin-top: 3px; overflow: hidden; color: var(--muted-2); font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.data-record-count { color: var(--muted-2); font-size: 10px; white-space: nowrap; }
+.data-delete-btn { display: inline-grid; width: 26px; height: 26px; place-items: center; border: 0; border-radius: 7px; color: #b64d3e; background: transparent; font-size: 18px; line-height: 1; }
+.data-delete-btn:hover { color: #fff; background: var(--coral); }
+.data-empty { padding: 25px 10px; color: var(--muted); font-size: 12px; line-height: 1.6; text-align: center; }
+@media (max-width: 680px) {
+  .data-management-toolbar { align-items: stretch; }
+  .data-management-summary { flex: 1 1 100%; order: 3; }
+  .data-export-btn { flex: 1 1 auto; }
+  .data-record-row { grid-template-columns: 22px minmax(0, 1fr) 26px; gap: 6px; }
+  .data-record-count { display: none; }
+}

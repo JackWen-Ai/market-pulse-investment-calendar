@@ -37,10 +37,10 @@
               <span id="monthMeta">—</span>
             </div>
             <button class="icon-btn" id="nextMonthBtn" type="button" aria-label="下个月">›</button>
-            <div class="month-actions" aria-label="版本与日期控制">
+            <div class="month-actions" aria-label="历史记录与日期控制">
               <button class="today-jump-btn" id="todayBtn" type="button">今天</button>
               <button class="history-btn" id="historyBtn" type="button">回溯</button>
-              <span class="version-change-summary" id="versionChangeSummary">本版本相较于前版本：—</span>
+              <span class="version-change-summary" id="versionChangeSummary">本记录相较于前记录：—</span>
             </div>
           </div>
           <div class="toolbar-right">
@@ -71,7 +71,8 @@
               </div>
               <button class="storage-settings-btn" id="storageSettingsBtn" type="button" aria-label="本地存储设置" aria-expanded="false">⚙</button>
               <div class="storage-menu" id="storageMenu" hidden>
-                <button type="button" id="pruneHistoryBtn">清理旧历史（保留最近 2 个版本）</button>
+                <button type="button" id="dataManagementBtn">数据管理</button>
+                <button type="button" id="pruneHistoryBtn">清理旧历史（保留最近 2 条记录）</button>
                 <button type="button" id="exportDataBtn">导出全部数据归档</button>
                 <button type="button" id="importDataBtn">导入数据归档</button>
                 <input id="importDataInput" type="file" accept="application/json,.json" hidden />
@@ -117,8 +118,8 @@
               </div>
               <span class="changelog-arrow" aria-hidden="true">→</span>
               <label class="changelog-time-block changelog-after-block">
-                <span>更新后（选择版本）</span>
-                <select id="changelogAfterVersion" aria-label="选择更新后的历史版本"></select>
+                <span>更新后（选择记录）</span>
+                <select id="changelogAfterVersion" aria-label="选择更新后的历史记录"></select>
               </label>
             </div>
             <div id="changelogList" class="changelog-list"></div>
@@ -178,7 +179,48 @@
         </div>
         <div class="history-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
         <div class="history-calendar-grid" id="historyCalendarGrid"></div>
-        <p class="history-note" id="historyNote">只显示已经保存快照的日期。仅在数据更新或导入新数据后保存版本。</p>
+        <p class="history-note" id="historyNote">只显示已经保存快照的日期。仅在数据更新或导入新数据后保存记录。</p>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="dataManagementBackdrop" hidden>
+      <section class="modal data-management-modal" role="dialog" aria-modal="true" aria-labelledby="dataManagementTitle">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">DATA MANAGEMENT</p>
+            <h2 id="dataManagementTitle">数据管理</h2>
+          </div>
+          <div class="data-management-head-actions"><button class="trash-btn" id="openTrashBtn" type="button" aria-label="打开回收站" title="回收站">♻</button><button class="icon-btn close-btn" id="closeDataManagementBtn" type="button" aria-label="关闭">×</button></div>
+        </div>
+        <p class="data-management-note" id="dataManagementNote">这里管理当前页面已加载的历史数据。删除后会先保存到本机；要同步到所有设备，请导出云端历史文件，替换仓库中的 data/history.json（若发布的是 dist 目录，则同时替换 dist/data/history.json）后再推送。</p>
+        <div class="data-management-toolbar">
+          <label class="data-select-all"><input type="checkbox" id="dataManagementSelectAll" />全选</label>
+          <span class="data-management-summary" id="dataManagementSummary">—</span>
+          <button class="danger-btn" id="dataManagementDeleteSelectedBtn" type="button" disabled>删除选中</button>
+          <button class="outline-btn data-export-btn" id="dataManagementExportBtn" type="button">导出云端历史文件</button>
+        </div>
+        <div class="data-management-list" id="dataManagementList"></div>
+        <div class="modal-actions">
+          <button class="ghost-btn" id="closeDataManagementBtnBottom" type="button">关闭</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="trashBackdrop" hidden>
+      <section class="modal data-management-modal" role="dialog" aria-modal="true" aria-labelledby="trashTitle">
+        <div class="modal-head">
+          <div><p class="section-kicker">TRASH</p><h2 id="trashTitle">回收站</h2></div>
+          <button class="icon-btn close-btn" id="closeTrashBtn" type="button" aria-label="关闭">×</button>
+        </div>
+        <p class="data-management-note">这里保存从数据管理中移出的记录。还原后会重新按日期排序编号；彻底删除后无法恢复。</p>
+        <div class="data-management-toolbar">
+          <label class="data-select-all"><input type="checkbox" id="trashSelectAll" />全选</label>
+          <span class="data-management-summary" id="trashSummary">—</span>
+          <button class="outline-btn" id="trashRestoreSelectedBtn" type="button" disabled>还原选中</button>
+          <button class="danger-btn" id="trashDeleteSelectedBtn" type="button" disabled>彻底删除</button>
+        </div>
+        <div class="data-management-list" id="trashList"></div>
+        <div class="modal-actions"><button class="ghost-btn" id="closeTrashBtnBottom" type="button">关闭</button></div>
       </section>
     </div>
 
