@@ -1,7 +1,7 @@
 {
   "schema": "market-pulse-history",
   "schemaVersion": 2,
-  "updatedAt": "2026-09-05T03:03:43.835Z",
+  "updatedAt": "2026-09-05T03:05:29.751Z",
   "history": {
     "2026-09-04": {
       "versions": [
@@ -9441,7 +9441,7 @@
               "url": "https://www.bls.gov/schedule/2026/"
             }
           ],
-          "lastDataUpdateAt": "2026-09-05T07:07:02+08:00",
+          "lastDataUpdateAt": "2026-09-05T11:05:29+08:00",
           "ui": {
             "filters": {
               "macro": true,
@@ -9540,8 +9540,9 @@
               "FTSE Russell",
               "公司IR/官方活动页"
             ],
-            "confirmedAt": "2026-09-05T03:03:43.835Z"
-          }
+            "confirmedAt": "2026-09-05T03:05:29.751Z"
+          },
+          "completedAtBeijing": "2026-09-05T11:05:29+08:00"
         }
       ]
     }
