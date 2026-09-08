@@ -401,10 +401,20 @@ const seedEvents = [
     "date": "2026-12-08",
     "id": "fed-20261208",
     "importance": "high",
-    "notes": "12月8–9日；伴随经济预测摘要。",
+    "notes": "美联储官方日历确认12月8–9日召开会议，并以星号标注伴随经济预测摘要；12月8日为会议首日，官方尚未公布具体时刻。",
     "time": "",
-    "title": "FOMC 会议（第1天）",
-    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    "title": "FOMC 会议（第1天，伴随SEP）",
+    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "会议日期已确认；具体时刻待确认",
+      "view": "影响判断：会议伴随经济预测摘要，政策措辞、利率路径和经济预测变化可能影响美债收益率、美元及成长股估值。"
+    },
+    "status": "日期已确认；具体时刻待确认",
+    "subtypes": [
+      "meeting",
+      "sep"
+    ]
   },
   {
     "category": "fed",
@@ -2522,6 +2532,40 @@ const seedEvents = [
       "consensus": "暂无可靠一致预期",
       "view": "影响判断：属于区域劳动力市场补充数据，通常不主导当日利率定价，但有助于判断就业与工资的地区分布。"
     }
+  },
+  {
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "日期时间已确认",
+      "view": "影响判断：生产率与单位劳动力成本的修订可能改变对工资成本、通胀压力及美联储政策路径的判断。"
+    },
+    "category": "macro",
+    "date": "2026-12-08",
+    "id": "cloud-macro-20261208-0830-productivity",
+    "importance": "medium",
+    "notes": "BLS官方日程确认第三季度生产率与成本修订值于12月8日08:30美国东部标准时间发布；北京时间2026-12-08 21:30。",
+    "sourceTimeZone": "America/New_York",
+    "status": "日期时间已确认",
+    "time": "08:30",
+    "title": "生产率与单位劳动力成本 · 第三季度修订值",
+    "url": "https://www.bls.gov/schedule/2026/"
+  },
+  {
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "日期时间已确认",
+      "view": "影响判断：贸易差额及进出口构成可能影响GDP跟踪预测、美元和利率预期，方向取决于实际数据及分项变化。"
+    },
+    "category": "macro",
+    "date": "2026-12-08",
+    "id": "cloud-macro-20261208-0830-trade",
+    "importance": "medium",
+    "notes": "BEA官方发布日程确认10月美国商品与服务贸易于12月8日08:30美国东部标准时间发布；北京时间2026-12-08 21:30。",
+    "sourceTimeZone": "America/New_York",
+    "status": "日期时间已确认",
+    "time": "08:30",
+    "title": "美国商品与服务贸易 · 10月",
+    "url": "https://www.bea.gov/news/schedule/"
   }
 ];
 
