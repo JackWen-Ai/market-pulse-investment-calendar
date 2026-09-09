@@ -421,10 +421,20 @@ const seedEvents = [
     "date": "2026-12-09",
     "id": "fed-20261209",
     "importance": "high",
-    "notes": "具体发布时间以美联储当日安排为准。",
-    "time": "14:00",
-    "title": "FOMC 利率决定 / 发布会",
-    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    "notes": "美联储官方日历确认12月8–9日召开会议，并以星号标注伴随经济预测摘要；12月9日为会议第二天。官方尚未公布利率声明、经济预测材料及新闻发布会的具体时刻，不沿用惯例填造14:00。",
+    "time": "",
+    "title": "FOMC 利率决定日（第2天，伴随SEP）",
+    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "会议日期已确认；利率声明、经济预测和发布会具体时刻待确认",
+      "view": "影响判断：利率决定、政策措辞与经济预测路径可能显著影响美债收益率、美元和成长股估值；需等待正式议程及结果。"
+    },
+    "status": "日期已确认；具体时刻待确认",
+    "subtypes": [
+      "decision",
+      "sep"
+    ]
   },
   {
     "category": "macro",
