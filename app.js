@@ -441,10 +441,17 @@ const seedEvents = [
     "date": "2026-12-10",
     "id": "bls-20261210",
     "importance": "high",
-    "notes": "消费者价格指数。",
+    "notes": "BLS官方日程确认11月消费者价格指数于12月10日08:30美国东部标准时间发布；北京时间2026-12-10 21:30。",
     "time": "08:30",
     "title": "CPI · 11月",
-    "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "日期时间已确认",
+      "view": "影响判断：CPI及核心分项将直接影响通胀路径、美联储政策预期、美债收益率和成长股估值。"
+    },
+    "sourceTimeZone": "America/New_York",
+    "status": "日期时间已确认"
   },
   {
     "category": "macro",
@@ -705,11 +712,18 @@ const seedEvents = [
     "date": "2026-12-10",
     "id": "claims-20261210",
     "importance": "medium",
-    "notes": "美国劳工部通常每周四 08:30 ET 发布；以当周公告为准。",
+    "notes": "美国劳工部官方说明周度初请通常每周四08:30 EST发布，2026年例外日仅列11月25日；12月10日按常规日程记录，北京时间2026-12-10 21:30，仍以当周公告为准。",
     "subtype": "claims",
     "time": "08:30",
     "title": "初请失业金 · 周报",
-    "url": "https://oui.doleta.gov/unemploy/claims_arch.asp"
+    "url": "https://oui.doleta.gov/unemploy/claims_arch.asp",
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "官方常规日程确认；以当周公告为准",
+      "view": "影响判断：初请数据反映高频就业变化，明显偏离近期趋势时可能影响利率预期和风险偏好。"
+    },
+    "sourceTimeZone": "America/New_York",
+    "status": "官方常规日程确认；以当周公告为准"
   },
   {
     "category": "macro",
@@ -2575,6 +2589,40 @@ const seedEvents = [
     "status": "日期时间已确认",
     "time": "08:30",
     "title": "美国商品与服务贸易 · 10月",
+    "url": "https://www.bea.gov/news/schedule/"
+  },
+  {
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "日期时间已确认",
+      "view": "影响判断：实际收入结合CPI观察居民购买力变化，可辅助判断消费韧性，但通常与同刻CPI共同定价。"
+    },
+    "category": "macro",
+    "date": "2026-12-10",
+    "id": "cloud-macro-20261210-0830-realearnings",
+    "importance": "medium",
+    "notes": "BLS官方日程确认11月实际收入于12月10日08:30美国东部标准时间发布；北京时间2026-12-10 21:30。",
+    "sourceTimeZone": "America/New_York",
+    "status": "日期时间已确认",
+    "time": "08:30",
+    "title": "实际收入 · 11月",
+    "url": "https://www.bls.gov/schedule/2026/12_sched.htm"
+  },
+  {
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "日期时间已确认",
+      "view": "影响判断：各州实际消费与收入数据有助于观察区域经济分化，通常对大盘即时定价影响有限。"
+    },
+    "category": "macro",
+    "date": "2026-12-10",
+    "id": "cloud-macro-20261210-0830-state-pce-income",
+    "importance": "medium",
+    "notes": "BEA官方发布日程确认2025年各州实际个人消费支出与实际个人收入于12月10日08:30美国东部标准时间发布；北京时间2026-12-10 21:30。",
+    "sourceTimeZone": "America/New_York",
+    "status": "日期时间已确认",
+    "time": "08:30",
+    "title": "各州实际PCE与实际个人收入 · 2025年",
     "url": "https://www.bea.gov/news/schedule/"
   }
 ];
