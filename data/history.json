@@ -1,7 +1,7 @@
 {
   "schema": "market-pulse-history",
   "schemaVersion": 2,
-  "updatedAt": "2026-09-10T23:04:30.812Z",
+  "updatedAt": "2026-09-10T23:05:52.010Z",
   "history": {
     "2026-09-04": {
       "versions": [
@@ -17513,7 +17513,7 @@
               "url": "https://www.bea.gov/news/schedule/"
             }
           ],
-          "lastDataUpdateAt": "2026-09-10T07:03:26+08:00",
+          "lastDataUpdateAt": "2026-09-11T07:05:52+08:00",
           "ui": {
             "filters": {
               "macro": true,
@@ -17616,7 +17616,7 @@
             ],
             "confirmedAt": "2026-09-10T23:04:30.812Z"
           },
-          "completedAtBeijing": ""
+          "completedAtBeijing": "2026-09-11T07:05:52+08:00"
         }
       ]
     }
