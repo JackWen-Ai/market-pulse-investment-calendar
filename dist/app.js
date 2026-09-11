@@ -1047,7 +1047,7 @@ const seedEvents = [
     "added": [],
     "category": "market",
     "date": "2026-12-11",
-    "effective": "2026年12月11日收盘附近",
+    "effective": "2026年12月11日美国股市收盘后（纽约EST）；12月14日开盘使用重构后指数",
     "funds": [
       "IWB",
       "IWM",
@@ -1056,16 +1056,21 @@ const seedEvents = [
     "id": "market-20261211-russell",
     "importance": "high",
     "indexName": "Russell 1000/2000/3000",
-    "notes": "NYSE 2026 交易日历列为12月11日 Russell Reconstitution final；最终名单和权重以 FTSE Russell 公告为准。",
+    "notes": "FTSE Russell官方确认这是2026年第二次、亦为恢复半年度安排后的首次12月重构；变更于12月11日美国股市收盘后生效，12月14日开盘使用新指数。纳入/移出名单尚未公布，数组保持为空。",
     "removed": [],
-    "status": "最终生效窗口已排期 · 纳入/移出名单待官方公告",
+    "status": "实施日已确认 · 纳入/移出名单待公告",
     "subtypes": [
       "passive",
       "rebalance"
     ],
     "time": "",
-    "title": "指数基金被动调仓 · Russell 年度重构",
-    "url": "https://www.nyse.com/publicdocs/nyse/ICE_NYSE_2026_Yearly_Trading_Calendar.pdf"
+    "title": "指数基金被动调仓 · Russell 半年度重构生效",
+    "url": "https://www.lseg.com/en/media-centre/press-releases/ftse-russell/2026/ftse-russell-announces-december-2026-russell-us-indexes-reconstitution-schedule",
+    "analysis": {
+      "consensus": "暂无可靠一致预期",
+      "progress": "实施日已确认 · 纳入/移出名单待公告",
+      "view": "影响判断：重构实施通常放大收盘竞价成交和个股短期波动；在官方名单和权重公布前，不能估算具体被动资金流向。"
+    }
   },
   {
     "category": "market",
